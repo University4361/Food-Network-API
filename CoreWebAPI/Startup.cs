@@ -32,7 +32,6 @@ namespace CoreWebAPI
             services.AddMvc();
 
             // Register our repositories.
-            services.AddSingleton<INoteRepository, NoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

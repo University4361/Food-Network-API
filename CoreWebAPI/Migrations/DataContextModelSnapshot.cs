@@ -20,6 +20,34 @@ namespace CoreWebAPI.Migrations
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CoreWebAPI.Models.Address", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<int?>("CustomerID");
+
+                    b.Property<int>("HomeNumber");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("CoreWebAPI.Models.Courier", b =>
                 {
                     b.Property<int>("ID")
@@ -46,6 +74,108 @@ namespace CoreWebAPI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Courier");
+                });
+
+            modelBuilder.Entity("CoreWebAPI.Models.CourierToken", b =>
+                {
+                    b.Property<int>("CourierID");
+
+                    b.Property<DateTime>("DateOfExpire");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.HasKey("CourierID");
+
+                    b.ToTable("CourierToken");
+                });
+
+            modelBuilder.Entity("CoreWebAPI.Models.Customer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.Property<string>("PhotoUrl")
+                        .HasMaxLength(256);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("CoreWebAPI.Models.Order", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AddressID");
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int>("CourierID");
+
+                    b.Property<int>("CustomerID");
+
+                    b.Property<DateTime>("DeliveryTime");
+
+                    b.Property<float>("Price");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AddressID");
+
+                    b.HasIndex("CourierID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("CoreWebAPI.Models.Address", b =>
+                {
+                    b.HasOne("CoreWebAPI.Models.Customer", "Customer")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CustomerID");
+                });
+
+            modelBuilder.Entity("CoreWebAPI.Models.CourierToken", b =>
+                {
+                    b.HasOne("CoreWebAPI.Models.Courier", "Courier")
+                        .WithOne("CourierToken")
+                        .HasForeignKey("CoreWebAPI.Models.CourierToken", "CourierID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CoreWebAPI.Models.Order", b =>
+                {
+                    b.HasOne("CoreWebAPI.Models.Address", "Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CoreWebAPI.Models.Courier", "Courier")
+                        .WithMany("Orders")
+                        .HasForeignKey("CourierID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CoreWebAPI.Models.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

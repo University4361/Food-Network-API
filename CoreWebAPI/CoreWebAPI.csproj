@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20180509214734_DeleteRange.cs" />
     <Compile Remove="Migrations\20180509214734_DeleteRange.Designer.cs" />
+    <Compile Remove="Migrations\20180512171110_AddressesTableCreated.cs" />
+    <Compile Remove="Migrations\20180512171110_AddressesTableCreated.Designer.cs" />
+    <Compile Remove="Migrations\20180512172411_CourierKeysUpdated.cs" />
+    <Compile Remove="Migrations\20180512172411_CourierKeysUpdated.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
