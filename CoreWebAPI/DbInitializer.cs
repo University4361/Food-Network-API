@@ -47,6 +47,51 @@ namespace CoreWebAPI
             }
 
             context.SaveChanges();
+
+            List<Report> reports = GetReports(couriers, orders);
+
+            foreach (Report report in reports)
+            {
+                context.Reports.Add(report);
+            }
+
+            context.SaveChanges();
+        }
+
+        private static List<Report> GetReports(List<Courier> couriers, List<Order> orders)
+        {
+            List<Report> reports = new List<Report>();
+
+            Random random = new Random();
+
+            foreach (Courier courier in couriers)
+            {
+                DateTime currDate = DateTime.Now.AddDays(-4);
+
+                while (currDate.Date <= DateTime.Now.Date)
+                {
+                    float currProfit = 0;
+
+                    foreach (Order order in orders)
+                    {
+                        if (courier.ID == order.CourierID && currDate.Date == order.DeliveryTime.Date)
+                            currProfit += order.Price;
+                    }
+
+                    reports.Add(new Report
+                    {
+                        Courier = courier,
+                        Profit = currProfit,
+                        Comment = $"Courier with ID {courier.ID} comment",
+                        Distance = random.Next(1000, 2000),
+                        ReportDate = currDate
+                    });
+
+                    currDate = currDate.AddDays(1);
+                }
+            }
+
+            return reports;
         }
 
         private static List<ProductOrder> GetProductOrders(List<Product> products, List<Order> orders, DataContext context, int objectsCount)
@@ -149,8 +194,8 @@ namespace CoreWebAPI
                     Price = random.Next(0, 2000),
                     Comment = $"Comment for {i} order",
                     OrderStatus = Status.New,
-                    DeliveryTime = DateTime.Now.AddHours(random.Next(2,15)),
-                    Address = new Address { City = $"City {i} for {courierName}", Country = $"Country {i} for {courierName}", Street = $"Street {i} for {courierName}", HomeNumber = i },
+                    DeliveryTime = DateTime.Now.AddDays(-4).AddDays(random.Next(0,4)).AddHours(10),
+                    Address = new Address { City = $"City {i}", Country = $"Country {i}", Street = $"Street {i}", HomeNumber = i },
                     Customer = customer
                 });
             }
