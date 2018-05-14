@@ -29,7 +29,7 @@ namespace CoreWebAPI.Controllers
         {
             if (CheckToken(request, out CourierToken courierToken))
             {
-                IEnumerable<Order> orders = _context.Order
+                IEnumerable<Order> orders = _context.Orders
                     .Include(o => o.Address)
                     .Include(o => o.Customer)
                     .Where(order => order.Courier.ID == courierToken.CourierID); 
@@ -46,7 +46,7 @@ namespace CoreWebAPI.Controllers
         {
             if (CheckToken(request, out CourierToken courierToken))
             {
-                Order order = _context.Order
+                Order order = _context.Orders
                     .Include(o => o.Address)
                     .Include(o => o.Customer)
                     .Include(o => o.ProductOrders)
@@ -78,7 +78,7 @@ namespace CoreWebAPI.Controllers
         {
             if (CheckToken(request, out CourierToken courierToken))
             {
-                Order order = _context.Order.FirstOrDefault(o => o.ID == request.OrderID);
+                Order order = _context.Orders.FirstOrDefault(o => o.ID == request.OrderID);
                 order.OrderStatus = request.NewStatus;
                 _context.Update(order);
 
@@ -92,7 +92,7 @@ namespace CoreWebAPI.Controllers
 
         private bool CheckToken(BaseRequest request, out CourierToken courierToken)
         {
-            courierToken = _context.CourierToken.FirstOrDefault(token => token.Value == request.Token);
+            courierToken = _context.CourierTokens.FirstOrDefault(token => token.Value == request.Token);
 
             if (courierToken != null && courierToken.DateOfExpire > DateTime.Now)
                 return true;

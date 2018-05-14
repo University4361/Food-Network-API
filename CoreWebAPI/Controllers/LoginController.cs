@@ -30,7 +30,7 @@ namespace CoreWebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AuthRequest auth)
         {
-            Courier courier = await _context.Courier.FirstOrDefaultAsync(u => u.Login == auth.Login && u.Password == auth.Password);
+            Courier courier = await _context.Couriers.FirstOrDefaultAsync(u => u.Login == auth.Login && u.Password == auth.Password);
 
             if (courier != null)
                 return Ok(await Authenticate(courier)); // аутентификация
@@ -43,12 +43,12 @@ namespace CoreWebAPI.Controllers
 
         private async Task<AuthResponse> Authenticate(Courier courier)
         {
-            CourierToken token = await _context.CourierToken.FirstOrDefaultAsync(tok => tok.CourierID == courier.ID);
+            CourierToken token = await _context.CourierTokens.FirstOrDefaultAsync(tok => tok.CourierID == courier.ID);
 
             if (token == null)
             {
                 token = new CourierToken { Value = Guid.NewGuid().ToString(), DateOfExpire = DateTime.Now.AddDays(3), Courier = courier, CourierID = courier.ID };
-                await _context.CourierToken.AddAsync(token);
+                await _context.CourierTokens.AddAsync(token);
 
                 await _context.SaveChangesAsync();
             }
@@ -57,7 +57,7 @@ namespace CoreWebAPI.Controllers
                 token.Value = Guid.NewGuid().ToString();
                 token.DateOfExpire = DateTime.Now.AddDays(3);
 
-                _context.CourierToken.Update(token);
+                _context.CourierTokens.Update(token);
 
                 await _context.SaveChangesAsync();
             }

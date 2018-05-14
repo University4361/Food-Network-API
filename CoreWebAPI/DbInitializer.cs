@@ -12,9 +12,8 @@ namespace CoreWebAPI
         public static void Initialize(DataContext context)
         {
             context.Database.EnsureCreated();
-
-            // Look for any students.
-            if (context.Courier.Any())
+            
+            if (context.Couriers.Any())
             {
                 return;   // DB has been seeded
             }
@@ -25,17 +24,17 @@ namespace CoreWebAPI
 
             foreach (Courier courier in couriers)
             {
-                context.Courier.Add(courier);
+                context.Couriers.Add(courier);
             }
 
             foreach (Customer customer in customers)
             {
-                context.Customer.Add(customer);
+                context.Customers.Add(customer);
             }
 
             foreach (Product product in products)
             {
-                context.Product.Add(product);
+                context.Products.Add(product);
             }
 
             context.SaveChanges();
@@ -44,7 +43,7 @@ namespace CoreWebAPI
 
             foreach (ProductOrder productOrder in productOrders)
             {
-                context.ProductOrder.Add(productOrder);
+                context.ProductOrders.Add(productOrder);
             }
 
             context.SaveChanges();

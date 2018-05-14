@@ -23,7 +23,7 @@ namespace CoreWebAPI.Controllers
         [HttpGet]
         public IEnumerable<Courier> GetCourier()
         {
-            return _context.Courier;
+            return _context.Couriers;
         }
 
         // GET: api/Couriers/5
@@ -35,7 +35,7 @@ namespace CoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var courier = await _context.Courier.SingleOrDefaultAsync(m => m.ID == id);
+            var courier = await _context.Couriers.SingleOrDefaultAsync(m => m.ID == id);
 
             if (courier == null)
             {
@@ -89,7 +89,7 @@ namespace CoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Courier.Add(courier);
+            _context.Couriers.Add(courier);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCourier", new { id = courier.ID }, courier);
@@ -104,13 +104,13 @@ namespace CoreWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var courier = await _context.Courier.SingleOrDefaultAsync(m => m.ID == id);
+            var courier = await _context.Couriers.SingleOrDefaultAsync(m => m.ID == id);
             if (courier == null)
             {
                 return NotFound();
             }
 
-            _context.Courier.Remove(courier);
+            _context.Couriers.Remove(courier);
             await _context.SaveChangesAsync();
 
             return Ok(courier);
@@ -118,7 +118,7 @@ namespace CoreWebAPI.Controllers
 
         private bool CourierExists(int id)
         {
-            return _context.Courier.Any(e => e.ID == id);
+            return _context.Couriers.Any(e => e.ID == id);
         }
     }
 }
