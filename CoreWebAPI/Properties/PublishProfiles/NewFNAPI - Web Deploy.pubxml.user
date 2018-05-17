@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Этот файл используется процессом публикации или упаковки вашего веб-проекта. Можно настроить поведение этого процесса,
+изменив этот файл MSBuild. Подробности см. на странице https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAA70IViEIQ0iAn3dAzWBWqgAAAAACAAAAAAAQZgAAAAEAACAAAADFzM79+9cEOV3VX0wQwJzyq33aAwW+YaXXPF1wc5hYWAAAAAAOgAAAAAIAACAAAAC2Se4RAhxhvwP7QAeLTFAqrZofSXgpHbedGp0aLNIU8oAAAADftA4SAOewbdElChn1SU3IQz72MXGEmPQF6GNt8lPx5DHQrFAp7S2Tnk6Hz/6lnCYJFvmPuraVAi8HM8T4wTdpgKTQdSQ9ZOR7HsIvQNqswX7szVliMN6p9wqBXF7DbYh5zcb/cVoMt0RUWIDN2hVCo7qUzZzYDQCemny2lJE5XUAAAABVEXqYXJIy+siH9qGgfxqMYVXv5hcdGxSNiUjt87uWaqilh9JXjQcEe7GMWP7nKTWBZH3Szl9W34dt+vyBidrw</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:newfnapidbserver.database.windows.net,1433;Initial Catalog=NewFNAPI_db;User Id=lavrovadmin@newfnapidbserver;Password=qazWSXedc123</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

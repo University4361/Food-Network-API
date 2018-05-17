@@ -25,7 +25,7 @@ namespace CoreWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=localhost\SQLEXPRESS;Database=FoodNetworkDB;Trusted_Connection=True;";
+            var connection = @"Data Source=tcp:newfnapidbserver.database.windows.net,1433;Initial Catalog=NewFNAPI_db;User Id=lavrovadmin@newfnapidbserver;Password=qazWSXedc123";
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
 
             services.AddMvc();

@@ -18,9 +18,9 @@ namespace CoreWebAPI
                 return;   // DB has been seeded
             }
 
-            List<Courier> couriers = GetCouriersAndCustomers(5, 3, out List<Customer> customers, out List<Order> orders);
+            List<Courier> couriers = GetCouriersAndCustomers(5, 8, out List<Customer> customers, out List<Order> orders);
 
-            List<Product> products = GetProducts(25);
+            List<Product> products = GetProducts(30);
 
             foreach (Courier courier in couriers)
             {
@@ -39,7 +39,7 @@ namespace CoreWebAPI
 
             context.SaveChanges();
 
-            List<ProductOrder> productOrders = GetProductOrders(products, orders, context, 100);
+            List<ProductOrder> productOrders = GetProductOrders(products, orders, context, 800);
 
             foreach (ProductOrder productOrder in productOrders)
             {
@@ -163,11 +163,16 @@ namespace CoreWebAPI
             {
                 List<Order> currentOrders = GetOrders(ordersCount, $"Courier {i}", customers[i]);
 
+                string login = i.ToString();
+
+                while (login.Length < 10)
+                    login = "0" + login; 
+
                 couriers.Add(new Courier
                 {
                     Name = $"Courier {i}",
                     BirthDate = new DateTime(random.Next(1990, 2000), random.Next(1, 12), random.Next(1, 30)),
-                    Login = $"courier{i}@mail.ru",
+                    Login = login,
                     Password = $"courier{i}",
                     PhotoUrl = "https://georges.net.au/wp-content/uploads/2016/06/qwewq.jpg",
                     Rate = random.Next(0, 5),
